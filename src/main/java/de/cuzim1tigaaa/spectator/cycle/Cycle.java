@@ -23,15 +23,20 @@ public class Cycle {
         this.last = last;
     }
 
-    public boolean hasNextPlayer() { return toVisit.size() == 0; }
-    public Player getLastPlayer() { return last; }
+    public boolean hasNextPlayer() {
+        return toVisit.size() == 0;
+    }
+
+    public Player getLastPlayer() {
+        return last;
+    }
 
     public Player getNextPlayer(Player spectator) {
         this.updateLists(spectator);
-        if(toVisit.size() == 0) return null;
-        if(toVisit.size() == 1) return toVisit.get(0);
+        if (toVisit.size() == 0) return null;
+        if (toVisit.size() == 1) return toVisit.get(0);
         Player player = toVisit.get(ThreadLocalRandom.current().nextInt(toVisit.size()));
-        if(player.equals(last)) return this.getNextPlayer(spectator);
+        if (player.equals(last)) return this.getNextPlayer(spectator);
         return this.visit(player);
     }
 

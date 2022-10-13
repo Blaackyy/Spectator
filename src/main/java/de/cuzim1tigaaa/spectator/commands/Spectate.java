@@ -1,14 +1,21 @@
 package de.cuzim1tigaaa.spectator.commands;
 
 import de.cuzim1tigaaa.spectator.Spectator;
-import de.cuzim1tigaaa.spectator.files.*;
+import de.cuzim1tigaaa.spectator.files.Messages;
+import de.cuzim1tigaaa.spectator.files.Paths;
+import de.cuzim1tigaaa.spectator.files.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Spectate implements CommandExecutor, TabCompleter {
 
@@ -21,17 +28,17 @@ public class Spectate implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
-        if(sender instanceof Player player) {
-            if(args.length == 0) {
-                if(!player.hasPermission(Permissions.COMMAND_SPECTATE_GENERAL)) {
-                    if(player.hasPermission(Permissions.COMMANDS_SPECTATE_CYCLEONLY)) {
+        if (sender instanceof Player player) {
+            if (args.length == 0) {
+                if (!player.hasPermission(Permissions.COMMAND_SPECTATE_GENERAL)) {
+                    if (player.hasPermission(Permissions.COMMANDS_SPECTATE_CYCLEONLY)) {
                         player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_CYCLEONLY));
                         return true;
                     }
                     player.sendMessage(Messages.getMessage(Paths.MESSAGE_DEFAULT_PERMISSION));
                     return true;
                 }
-                if(this.plugin.getSpectators().contains(player)) {
+                if (this.plugin.getSpectators().contains(player)) {
                     this.plugin.getSpectateManager().unSpectate(player, false);
                     player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_LEAVE_OWN));
                     return true;
@@ -40,8 +47,8 @@ public class Spectate implements CommandExecutor, TabCompleter {
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_JOIN_OWN));
                 return true;
             }
-            if(!player.hasPermission(Permissions.COMMAND_SPECTATE_OTHERS)) {
-                if(player.hasPermission(Permissions.COMMANDS_SPECTATE_CYCLEONLY)) {
+            if (!player.hasPermission(Permissions.COMMAND_SPECTATE_OTHERS)) {
+                if (player.hasPermission(Permissions.COMMANDS_SPECTATE_CYCLEONLY)) {
                     player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_CYCLEONLY));
                     return true;
                 }
@@ -49,20 +56,20 @@ public class Spectate implements CommandExecutor, TabCompleter {
                 return true;
             }
             Player target = Bukkit.getPlayer(args[0]);
-            if(target == null || !target.isOnline()) {
+            if (target == null || !target.isOnline()) {
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_OFFLINEPLAYER, "TARGET", args[0]));
                 return true;
             }
-            if(target.getUniqueId().equals(player.getUniqueId())) {
+            if (target.getUniqueId().equals(player.getUniqueId())) {
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_YOURSELF));
                 return true;
             }
-            if(this.plugin.getRelation().get(player) == target) {
+            if (this.plugin.getRelation().get(player) == target) {
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_SAMEPLAYER, "TARGET", target.getDisplayName()));
                 return true;
             }
-            if(this.plugin.getRelation().get(target) == player || target.hasPermission(Permissions.BYPASS_SPECTATED)) {
-                if(!player.hasPermission(Permissions.BYPASS_SPECTATEALL)) {
+            if (this.plugin.getRelation().get(target) == player || target.hasPermission(Permissions.BYPASS_SPECTATED)) {
+                if (!player.hasPermission(Permissions.BYPASS_SPECTATEALL)) {
                     player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_BYPASS_TELEPORT, "TARGET", target.getDisplayName()));
                     return true;
                 }
@@ -71,13 +78,13 @@ public class Spectate implements CommandExecutor, TabCompleter {
             player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_PLAYER, "TARGET", target.getDisplayName()));
             return true;
         }
-        if(args.length > 0) {
+        if (args.length > 0) {
             Player player = Bukkit.getPlayer(args[0]);
-            if(player == null) {
+            if (player == null) {
                 sender.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_OFFLINEPLAYER, "TARGET", args[0]));
                 return true;
             }
-            if(player.getGameMode().equals(GameMode.SPECTATOR)) {
+            if (player.getGameMode().equals(GameMode.SPECTATOR)) {
                 this.plugin.getSpectateManager().unSpectate(player, false);
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_LEAVE_OWN));
                 sender.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_LEAVE_OTHER, "TARGET", player.getDisplayName()));
@@ -95,7 +102,7 @@ public class Spectate implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] args) {
         final List<String> tab = new ArrayList<>();
-        if(args.length == 1) for(Player player : Bukkit.getOnlinePlayers()) tab.add(player.getDisplayName());
+        if (args.length == 1) for (Player player : Bukkit.getOnlinePlayers()) tab.add(player.getDisplayName());
         return tab;
     }
 }

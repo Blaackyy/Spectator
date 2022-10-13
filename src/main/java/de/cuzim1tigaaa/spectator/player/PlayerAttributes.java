@@ -25,9 +25,23 @@ public class PlayerAttributes {
         effects = new HashSet<>(player.getActivePotionEffects());
     }
 
-    public GameMode getGameMode() { return gameMode; }
-    public Location getLocation() { return location; }
-    public Boolean getFlying() { return isFlying; }
-    public ItemStack[] getPlayerInventory() { return playerInventory; }
-    public Set<PotionEffect> getEffects() { return effects; }
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public Boolean getFlying() {
+        return isFlying;
+    }
+
+    public ItemStack[] getPlayerInventory() {
+        return playerInventory;
+    }
+
+    public Set<PotionEffect> getEffects() {
+        return effects;
+    }
 }

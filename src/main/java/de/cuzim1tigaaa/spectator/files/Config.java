@@ -17,14 +17,14 @@ public final class Config {
 
     public static void loadConfig(Spectator plugin) {
         int serverVersion = Integer.parseInt(plugin.getServer().getBukkitVersion().split("\\.")[1].substring(0, 2)), currentVersion = 6;
-        if(serverVersion < 18) {
+        if (serverVersion < 18) {
             saveDefaultConfig(plugin);
-            if(config.getInt("ConfigVersion") < currentVersion) replaceConfig(plugin, true);
+            if (config.getInt("ConfigVersion") < currentVersion) replaceConfig(plugin, true);
             return;
         }
         try {
             configFile = new File(plugin.getDataFolder(), "config.yml");
-            if(!configFile.exists()) {
+            if (!configFile.exists()) {
                 config = new YamlConfiguration();
                 config.save(configFile);
             }
@@ -88,42 +88,50 @@ public final class Config {
                     "Shows a bossbar to cycling players with the name of the current target"), false);
 
             config.save(configFile);
-        }catch(IOException exception) {
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
-        if(config.getInt(Paths.CONFIG_VERSION) < currentVersion) replaceConfig(plugin, false);
+        if (config.getInt(Paths.CONFIG_VERSION) < currentVersion) replaceConfig(plugin, false);
     }
+
     private static void set(String path, List<String> comment, Object value) {
-        if(value == null && config.getConfigurationSection(path) == null) config.createSection(path);
+        if (value == null && config.getConfigurationSection(path) == null) config.createSection(path);
         else config.set(path, config.get(path, value));
-        if(comment != null && comment.size() > 0) config.setComments(path, comment);
+        if (comment != null && comment.size() > 0) config.setComments(path, comment);
     }
+
     private static List<String> comments(boolean empty, String... comment) {
         List<String> comments = new ArrayList<>();
-        if(empty) comments.add(null);
-        if(comment != null && comment.length > 0) comments.addAll(List.of(comment));
+        if (empty) comments.add(null);
+        if (comment != null && comment.length > 0) comments.addAll(List.of(comment));
         return comments;
     }
 
-    public static boolean getBoolean(String path) { return config.getBoolean(path); }
-    public static String getString(String path) { return config.getString(path); }
+    public static boolean getBoolean(String path) {
+        return config.getBoolean(path);
+    }
+
+    public static String getString(String path) {
+        return config.getString(path);
+    }
 
     private static void replaceConfig(Spectator plugin, boolean old) {
         int i = 1;
         File backUp = new File(plugin.getDataFolder(), "configBackUp_" + i + ".yml");
-        while(backUp.exists()) backUp = new File(plugin.getDataFolder(), "configBackUp_" + (i++) + ".yml");
+        while (backUp.exists()) backUp = new File(plugin.getDataFolder(), "configBackUp_" + (i++) + ".yml");
 
         try {
             Files.copy(configFile.toPath(), backUp.toPath());
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         //noinspection ResultOfMethodCallIgnored
         configFile.delete();
-        if(old) saveDefaultConfig(plugin);
+        if (old) saveDefaultConfig(plugin);
         else loadConfig(plugin);
     }
+
     public static void saveDefaultConfig(Spectator plugin) {
         if (configFile == null) configFile = new File(plugin.getDataFolder(), "config.yml");
         if (!configFile.exists()) plugin.saveResource("config.yml", false);
