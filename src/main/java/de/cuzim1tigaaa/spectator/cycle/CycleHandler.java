@@ -60,13 +60,17 @@ public class CycleHandler {
 
     public static void next(Player player) {
         if (!cycleTasks.containsKey(player)) return;
+
         Cycle cycle = cycleTasks.get(player).getCycle();
+
         if (!cycle.hasNextPlayer())
             cycleTasks.get(player).setCycle(new Cycle(player, cycle.getLastPlayer() != null ? cycle.getLastPlayer() : null));
+
         Player next = cycle.getNextPlayer(player);
 
         // if(next == player || (next == null && cycle.getLastPlayer() == null)) stopCycle(player);
         if (next == null || next.isDead()) next = null;
+
         plugin.getSpectateManager().spectate(player, next);
         sendBossBar(player, next);
     }
@@ -74,35 +78,44 @@ public class CycleHandler {
     public static void startCycle(final Player player, int seconds, boolean restart) {
         breakCycle(player, true);
         cycleTasks.remove(player);
+
         int ticks = seconds * 20;
+
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, () -> next(player), 0, ticks);
         cycleTasks.put(player, new CycleTask(seconds, new Cycle(player, null), task));
 
         if (restart)
             player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_CYCLE_RESTART, "INTERVAL", seconds));
+
         else player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_CYCLE_START, "INTERVAL", seconds));
     }
 
     public static void stopCycle(Player player) {
         breakCycle(player, true);
+
         if (cycleTasks.containsKey(player)) {
             resetBossBar(player);
             cycleTasks.remove(player);
         }
+
         player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_CYCLE_STOP));
     }
 
     public static void pauseCycle(Player player) {
         int interval = cycleTasks.get(player).getInterval();
+
         pausedCycles.put(player, interval);
         breakCycle(player, false);
         sendBossBar(player, null);
+
         player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_CYCLE_PAUSE));
     }
 
     public static void restartCycle(Player player) {
         int seconds = pausedCycles.getOrDefault(player, 0);
+
         pausedCycles.remove(player);
+        
         if (seconds == 0) breakCycle(player, true);
         else startCycle(player, seconds, true);
     }

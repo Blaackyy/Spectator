@@ -78,6 +78,7 @@ public class Spectate implements CommandExecutor, TabCompleter {
             player.sendMessage(Messages.getMessage(Paths.MESSAGES_COMMANDS_SPECTATE_PLAYER, "TARGET", target.getDisplayName()));
             return true;
         }
+        
         if (args.length > 0) {
             Player player = Bukkit.getPlayer(args[0]);
             if (player == null) {
@@ -102,7 +103,7 @@ public class Spectate implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String s, @Nonnull String[] args) {
         final List<String> tab = new ArrayList<>();
-        if (args.length == 1) for (Player player : Bukkit.getOnlinePlayers()) tab.add(player.getDisplayName());
+        if (args.length == 1) for (Player player : Bukkit.getAllOnlinePlayers()) tab.add(player.getDisplayName());
         return tab;
     }
 }

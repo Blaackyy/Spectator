@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
                 Player spectator = entry.getKey();
                 if (!CycleHandler.isPlayerCycling(spectator)) this.manager.dismountTarget(spectator);
                 else {
-                    int onlineNonSpec = (Bukkit.getOnlinePlayers().size() - 1) - this.plugin.getSpectators().size();
+                    int onlineNonSpec = (Bukkit.getAllOnlinePlayers().size() - 1) - this.plugin.getSpectators().size();
                     if (onlineNonSpec <= 0) {
                         if (Config.getBoolean(Paths.CONFIG_CYCLE_PAUSE_NO_PLAYERS)) CycleHandler.pauseCycle(spectator);
                         else CycleHandler.stopCycle(spectator);

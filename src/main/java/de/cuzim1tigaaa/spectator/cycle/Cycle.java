@@ -35,6 +35,7 @@ public class Cycle {
         this.updateLists(spectator);
         if (toVisit.size() == 0) return null;
         if (toVisit.size() == 1) return toVisit.get(0);
+
         Player player = toVisit.get(ThreadLocalRandom.current().nextInt(toVisit.size()));
         if (player.equals(last)) return this.getNextPlayer(spectator);
         return this.visit(player);
@@ -48,7 +49,7 @@ public class Cycle {
     }
 
     private void updateLists(Player spectator) {
-        toVisit.addAll(Bukkit.getOnlinePlayers());
+        toVisit.addAll(Bukkit.getAllOnlinePlayers());
         toVisit.remove(owner);
         toVisit.removeAll(plugin.getSpectators());
 

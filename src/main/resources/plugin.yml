@@ -5,22 +5,22 @@ main: ${project.groupId}.Spectator
 api-version: 1.16
 commands:
   spectate:
-    aliases: [spec]
+    aliases: [ spec ]
     usage: /spectate [target]
   spectatecycle:
-    aliases: [speccycle]
+    aliases: [ speccycle ]
     usage: /spectatecycle <start|stop> ...
   spectatehere:
-    aliases: [spechere,spech]
+    aliases: [ spechere,spech ]
     usage: /spectatehere
   spectatelist:
-    aliases: [speclist]
+    aliases: [ speclist ]
     usage: /spectatelist
   spectatereload:
-    aliases: [specreload,specrl]
+    aliases: [ specreload,specrl ]
     usage: /spectatereload
   unspectate:
-    aliases: [unspec]
+    aliases: [ unspec ]
     usage: /unspectate [Player] [true|false]
 permissions:
   spectator.*:
@@ -98,6 +98,3 @@ permissions:
             spectator.utils.hidetab:
               description: Permission to be hidden in Spigot Tablist
               default: false
-      spectator.notify.update:
-        description: Permission to get an alert when an update is available
-        default: op
