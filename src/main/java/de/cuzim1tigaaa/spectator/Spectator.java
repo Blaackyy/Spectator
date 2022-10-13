@@ -6,7 +6,6 @@ import de.cuzim1tigaaa.spectator.files.Messages;
 import de.cuzim1tigaaa.spectator.listener.PlayerListener;
 import de.cuzim1tigaaa.spectator.player.Inventory;
 import de.cuzim1tigaaa.spectator.player.SpectateManager;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,10 +13,7 @@ import java.util.*;
 
 public final class Spectator extends JavaPlugin {
 
-    private UpdateChecker updateChecker;
     private SpectateManager spectateManager;
-
-    public UpdateChecker getUpdateChecker() { return updateChecker; }
     private final Set<Player> spectators = new HashSet<>();
 
     private final HashMap<Player, Player> relation = new HashMap<>();
@@ -30,10 +26,7 @@ public final class Spectator extends JavaPlugin {
     @Override
     public void onEnable() {
         spectateManager = new SpectateManager(this);
-        updateChecker = new UpdateChecker(this);
-
         info();
-        new Metrics(this, 12235);
         register();
     }
 

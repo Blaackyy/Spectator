@@ -10,7 +10,7 @@
     <version>1.7</version>
 
     <properties>
-        <java.version>16</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,13 +46,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Dependency for bstats -->
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>

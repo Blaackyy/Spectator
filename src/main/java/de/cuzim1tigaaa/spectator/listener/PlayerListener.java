@@ -30,13 +30,6 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if(player.hasPermission(Permissions.NOTIFY_UPDATE_ON_JOIN) && Config.getBoolean(Paths.CONFIG_NOTIFY_UPDATE)) {
-            if(this.plugin.getUpdateChecker().isAvailable()) {
-                player.sendMessage(ChatColor.RED + "Spectator " + ChatColor.DARK_GRAY + "|" + ChatColor.GOLD + ChatColor.BOLD + " An Update is available! "
-                        + ChatColor.DARK_GRAY + "[" + ChatColor.YELLOW + "v" + this.plugin.getUpdateChecker().getVersion().replace("v", "") + ChatColor.DARK_GRAY + "]");
-                player.sendMessage(ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "» " + ChatColor.YELLOW + "https://www.spigotmc.org/resources/spectator.93051/");
-            }
-        }
         if(Config.getBoolean(Paths.CONFIG_CYCLE_PAUSE_NO_PLAYERS))
             for(Player paused : CycleHandler.getPausedCycles().keySet()) CycleHandler.restartCycle(paused);
 
