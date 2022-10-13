@@ -4,7 +4,6 @@ import de.cuzim1tigaaa.spectator.commands.*;
 import de.cuzim1tigaaa.spectator.files.Config;
 import de.cuzim1tigaaa.spectator.files.Messages;
 import de.cuzim1tigaaa.spectator.listener.PlayerListener;
-import de.cuzim1tigaaa.spectator.player.Inventory;
 import de.cuzim1tigaaa.spectator.player.SpectateManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -61,7 +60,6 @@ public final class Spectator extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Inventory.restoreAll();
         spectateManager.restoreAll();
     }
 }

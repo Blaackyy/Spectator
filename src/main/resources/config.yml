@@ -39,29 +39,6 @@ Settings:
     # Requires allow-flight to true in server.properties!
     PlayerFlightMode: true
 
-  Mirror:
-
-    # Get all effects your spectator target currently has
-    # Requires following permission: spectator.utils.mirroreffects
-    TargetEffects: true
-
-    # Adds all inventory content of your spectator target in your inventory
-    # Requires following permission: spectator.utils.mirrorinventory
-    TargetInventory: true
-
-  Inventory:
-
-    # Allows spectators with the following permission to see into containers their target opens
-    # Only available for the following types of containers:
-    # BARREL; BLAST_FURNACE; BREWING_STAND; (TRAPPED-)CHEST; DISPENSER; DROPPER; FURNACE; HOPPER; SMOKER; SHULKER_BOX; LECTERN
-    # Permission: spectator.utils.opencontainers
-    OpenContainers: true
-
-    # Allows spectators with the following permission to see into their target's enderchest
-    # Only when the target opens a physically enderchest!
-    # Permission: spectator.utils.openenderchest
-    OpenEnderChest: false
-
   Cycle:
 
     # Allows starting cycling even with no players online

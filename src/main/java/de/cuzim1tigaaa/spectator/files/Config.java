@@ -28,6 +28,7 @@ public final class Config {
                 config = new YamlConfiguration();
                 config.save(configFile);
             }
+
             config = YamlConfiguration.loadConfiguration(configFile);
 
             config.options().setHeader(comments(false,
@@ -71,29 +72,6 @@ public final class Config {
                     "The players' flight mode will be saved. Otherwise, when the player",
                     "leaves spectator mode, he won't be he won't be flying anymore.",
                     "Requires allow-flight to true in server.properties!"), true);
-
-            set("Settings.Mirror", comments(true), null);
-
-            set(Paths.CONFIG_MIRROR_TARGET_EFFECTS, comments(true,
-                    "Get all effects a spectator target currently has",
-                    "Requires following permission: spectator.utils.mirroreffects"), true);
-
-            set(Paths.CONFIG_MIRROR_TARGETS_INVENTORY, comments(true,
-                    "Adds all inventory content of your spectator target in your inventory",
-                    "Requires following permission: spectator.utils.mirrorinventory"), true);
-
-            set("Settings.Inventory", comments(true), null);
-
-            set(Paths.CONFIG_INVENTORY_CONTAINERS, comments(true,
-                    "Allows spectators with the following permission to see into containers their target opens",
-                    "Only available for the following types of containers:",
-                    "BARREL; BLAST_FURNACE; BREWING_STAND; (TRAPPED-)CHEST; DISPENSER; DROPPER; FURNACE; HOPPER; SMOKER; SHULKER_BOX; LECTERN",
-                    "Permission: spectator.utils.opencontainers"), true);
-
-            set(Paths.CONFIG_INVENTORY_ENDERCHEST, comments(true,
-                    "Allows spectators with the following permission to see into their target's enderchest",
-                    "Only when the target opens a physically enderchest!",
-                    "Permission: spectator.utils.openenderchest"), false);
 
             set("Settings.Cycle", comments(true), null);
 

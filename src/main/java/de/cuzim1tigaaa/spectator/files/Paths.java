@@ -12,12 +12,6 @@ public final class Paths {
     public final static String CONFIG_SAVE_PLAYERS_LOCATION = "Settings.Save.PlayerLocation";
     public final static String CONFIG_SAVE_PLAYERS_FLIGHTMODE = "Settings.Save.PlayerFlightMode";
 
-    public final static String CONFIG_MIRROR_TARGET_EFFECTS = "Settings.Mirror.TargetEffects";
-    public final static String CONFIG_MIRROR_TARGETS_INVENTORY = "Settings.Mirror.TargetInventory";
-
-    public final static String CONFIG_INVENTORY_CONTAINERS = "Settings.Inventory.OpenContainers";
-    public final static String CONFIG_INVENTORY_ENDERCHEST = "Settings.Inventory.OpenEnderChest";
-
     public final static String CONFIG_CYCLE_NO_PLAYERS = "Settings.Cycle.StartWhenNoPlayers";
 
     public final static String CONFIG_CYCLE_PAUSE_NO_PLAYERS = "Settings.Cycle.PauseWhenNoPlayers";

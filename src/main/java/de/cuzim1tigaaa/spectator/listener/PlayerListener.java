@@ -115,58 +115,20 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getWhoClicked().getGameMode().equals(GameMode.SPECTATOR)) event.setCancelled(true);
-    }
+    public void onInventoryClick(InventoryClickEvent event) { if (event.getWhoClicked().getGameMode().equals(GameMode.SPECTATOR)) event.setCancelled(true); }
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) { if (event.getWhoClicked().getGameMode().equals(GameMode.SPECTATOR)) event.setCancelled(true); }
 
     @EventHandler
-    public void onChestOpen(InventoryOpenEvent event) {
-        Player player = (Player) event.getPlayer();
-        if(!this.plugin.getRelation().containsValue(player)) return;
-
-        Set<Player> spectators = new HashSet<>(this.plugin.getSpectators());
-        spectators.removeIf(p -> !this.plugin.getRelation().containsKey(p) || !this.plugin.getRelation().get(p).equals(player));
-
-        Inventory inventory = null;
-        switch(event.getInventory().getType()) {
-            case BARREL, BLAST_FURNACE, BREWING, CHEST, DISPENSER, DROPPER, FURNACE, HOPPER, SMOKER, SHULKER_BOX, LECTERN -> {
-                spectators.removeIf(p -> !p.hasPermission(Permissions.UTILS_OPEN_CONTAINER));
-                if(Config.getBoolean(Paths.CONFIG_INVENTORY_CONTAINERS)) inventory = event.getInventory();
-            }
-            case ENDER_CHEST -> {
-                spectators.removeIf(p -> !p.hasPermission(Permissions.UTILS_OPEN_ENDERCHEST));
-                if(Config.getBoolean(Paths.CONFIG_INVENTORY_ENDERCHEST)) inventory = player.getEnderChest();
-            }
-        }
-        if(inventory != null) for(Player spec : spectators) spec.openInventory(inventory);
-    }
-    @EventHandler
-    public void onChestClose(InventoryCloseEvent event) {
-        Player player = (Player) event.getPlayer();
-        if(!this.plugin.getRelation().containsValue(player)) return;
-
-        switch(event.getInventory().getType()) {
-            case WORKBENCH, STONECUTTER, CARTOGRAPHY, GRINDSTONE, ENCHANTING, COMPOSTER, SMITHING, CREATIVE, BEACON, ANVIL, LOOM, CRAFTING, MERCHANT, PLAYER -> { return; }
-            case ENDER_CHEST -> { if(!Config.getBoolean(Paths.CONFIG_INVENTORY_ENDERCHEST)) return; }
-            case BARREL, BLAST_FURNACE, BREWING, CHEST, DISPENSER, DROPPER, FURNACE, HOPPER, SMOKER, SHULKER_BOX, LECTERN -> { if(!Config.getBoolean(Paths.CONFIG_INVENTORY_CONTAINERS)) return; }
-        }
-
-        Set<Player> spectators = new HashSet<>(this.plugin.getSpectators());
-        spectators.removeIf(p -> p.getSpectatorTarget() == null || !(p.getSpectatorTarget() instanceof Player)
-                || !p.getSpectatorTarget().getUniqueId().equals(player.getUniqueId()));
-
-        for(Player spec : spectators) spec.closeInventory();
-    }
-
-    @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         if(event.getCause() != PlayerTeleportEvent.TeleportCause.SPECTATE) return;
+
         Player player = event.getPlayer();
+
         if(player.getSpectatorTarget() == null || !(player.getSpectatorTarget() instanceof Player target)) return;
 
         if(!player.hasPermission(Permissions.COMMAND_SPECTATE_OTHERS)) return;
+
         if(target.hasPermission(Permissions.BYPASS_SPECTATED)) {
             if(!player.hasPermission(Permissions.BYPASS_SPECTATEALL)) {
                 player.sendMessage(Messages.getMessage(Paths.MESSAGES_GENERAL_BYPASS_INVENTORY, "TARGET", target.getName()));
@@ -174,7 +136,7 @@ public class PlayerListener implements Listener {
                 return;
             }
         }
-        de.cuzim1tigaaa.spectator.player.Inventory.getInventory(player, target);
+
         this.plugin.getRelation().put(player, target);
     }
 }
