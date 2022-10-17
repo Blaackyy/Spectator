@@ -31,13 +31,13 @@ public class Cycle {
         return last;
     }
 
-    public Player getNextPlayer(Player spectator) {
-        this.updateLists(spectator);
+    public Player getNextPlayer() {
+        this.updateLists();
         if (toVisit.size() == 0) return null;
         if (toVisit.size() == 1) return toVisit.get(0);
 
         Player player = toVisit.get(ThreadLocalRandom.current().nextInt(toVisit.size()));
-        if (player.equals(last)) return this.getNextPlayer(spectator);
+        if (player.equals(last)) return this.getNextPlayer();
         return this.visit(player);
     }
 
@@ -48,15 +48,15 @@ public class Cycle {
         return player;
     }
 
-    private void updateLists(Player spectator) {
-        toVisit.addAll(Bukkit.getAllOnlinePlayers());
-        toVisit.remove(owner);
-        toVisit.removeAll(plugin.getSpectators());
-
-        toVisit.removeIf(p -> p.hasPermission(Permissions.BYPASS_SPECTATED) &&
-                !spectator.hasPermission(Permissions.BYPASS_SPECTATEALL));
-
+    private void updateLists() {
         alreadyVisited.removeIf(p -> !p.isOnline());
+
+        for (Player player : Bukkit.getAllOnlinePlayers()){
+            if (player.equals(owner)) continue;
+            if (plugin.getSpectators().contains(player)) continue;
+            toVisit.add(player);
+        }
+
         toVisit.removeAll(alreadyVisited);
     }
 }

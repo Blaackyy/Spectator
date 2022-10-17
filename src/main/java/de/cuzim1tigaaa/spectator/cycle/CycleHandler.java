@@ -66,7 +66,7 @@ public class CycleHandler {
         if (!cycle.hasNextPlayer())
             cycleTasks.get(player).setCycle(new Cycle(player, cycle.getLastPlayer() != null ? cycle.getLastPlayer() : null));
 
-        Player next = cycle.getNextPlayer(player);
+        Player next = cycle.getNextPlayer();
 
         // if(next == player || (next == null && cycle.getLastPlayer() == null)) stopCycle(player);
         if (next == null || next.isDead()) next = null;
